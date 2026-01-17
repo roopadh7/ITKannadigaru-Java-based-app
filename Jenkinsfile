@@ -71,5 +71,19 @@ pipeline{
                 '''
             }
         }
+        stage('aws-cluster-update'){
+            steps{
+                sh 'aws eks update-kubeconfig --region ${AWS_REGION} --name ${CLUSTER_NAME}'
+            }
+        }
+
+        stage('Deploying to eKS'){
+            steps{
+                withKubeConfig(caCertificate: '', clusterName: 'itkannadigaru-cluster', contextName: '', credentialsId: 'kube', namespace: 'itkannadigaru', restrictKubeConfigAccess: false, serverUrl: 'https://33B7FC9D7C8248228BA014E9690ED16E.sk1.us-west-2.eks.amazonaws.com') {
+                        sh "sed -i 's|replace|${IMAGE_NAME}|g' deployment.yaml"
+                        sh "kubectl apply -f deployment.yaml -n ${NAMESPACE}"
+                }
+            }
+        }
     }
 }
