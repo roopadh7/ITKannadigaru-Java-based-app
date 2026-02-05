@@ -17,6 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import org.springframework.security.web.session.HttpSessionEventPublisher;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -72,6 +74,10 @@ public class SecurityConfig {
                 )
                 .rememberMe(rememberMe -> rememberMe
                         .tokenRepository(persistentTokenRepository())
+                )
+                .sessionManagement(session -> session
+                        .maximumSessions(-1) // Allow unlimited concurrent sessions
+                        .expiredUrl("/login?expired")
                 );
         return http.build();
     }
@@ -81,5 +87,10 @@ public class SecurityConfig {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
         return tokenRepository;
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 }
