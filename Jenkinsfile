@@ -82,7 +82,7 @@ pipeline{
 
         stage('Deploy to EKS cluster'){
             steps{
-                withKubeConfig(caCertificate: '', clusterName: 'itkannadigaru', contextName: '', credentialsId: 'kube', namespace: 'itkannadigaru', restrictKubeConfigAccess: false, serverUrl: 'https://D0CDD4635EF71BA7F02E6B19DE8F3147.yl4.us-west-2.eks.amazonaws.com'){
+                withKubeConfig(caCertificate: '', clusterName: 'itkannadigaru', contextName: '', credentialsId: 'kube', namespace: 'itkannadigaru', restrictKubeConfigAccess: false, serverUrl: 'https://688F197BF70A6790C077E2E1C239DD27.gr7.us-west-2.eks.amazonaws.com'){
                     sh " sed -i 's|replace|${IMAGE_NAME}|g' deployment.yml "
                     sh " kubectl apply -f deployment.yml -n ${NAMESPACE}"
                 }
@@ -90,7 +90,7 @@ pipeline{
         }
         stage('verify'){
             steps{
-                withKubeConfig(caCertificate: '', clusterName: 'itkannadigaru', contextName: '', credentialsId: 'kube', namespace: 'itkannadigaru', restrictKubeConfigAccess: false, serverUrl: 'https://D0CDD4635EF71BA7F02E6B19DE8F3147.yl4.us-west-2.eks.amazonaws.com'){
+                withKubeConfig(caCertificate: '', clusterName: 'itkannadigaru', contextName: '', credentialsId: 'kube', namespace: 'itkannadigaru', restrictKubeConfigAccess: false, serverUrl: 'https://688F197BF70A6790C077E2E1C239DD27.gr7.us-west-2.eks.amazonaws.com'){
                     sh " kubectl get pods -n ${NAMESPACE}"
                     sh " kubectl get svc -n ${NAMESPACE}"
                 }
