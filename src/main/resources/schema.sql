@@ -1,8 +1,16 @@
--- Schema for users table; keep column name 'password' for compatibility
+-- Schema for users table
 CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Schema for persistent_logins table
+CREATE TABLE IF NOT EXISTS persistent_logins (
+    username VARCHAR(64) NOT NULL,
+    series VARCHAR(64) PRIMARY KEY,
+    token VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP NOT NULL
 );

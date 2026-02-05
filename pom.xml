@@ -49,11 +49,11 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <!-- SQLite JDBC Driver -->
+        <!-- PostgreSQL JDBC Driver -->
         <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.42.0.0</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- Optional: live reload during dev -->
