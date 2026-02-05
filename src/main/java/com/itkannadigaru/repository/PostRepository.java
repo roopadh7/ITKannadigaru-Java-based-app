@@ -22,19 +22,6 @@ public class PostRepository {
 
     public PostRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        initializeTable();
-    }
-
-    private void initializeTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS posts (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "title TEXT NOT NULL, " +
-                "content TEXT NOT NULL, " +
-                "author TEXT NOT NULL, " +
-                "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
-                "category TEXT" +
-                ")";
-        jdbcTemplate.execute(sql);
     }
 
     public Post save(Post post) {
