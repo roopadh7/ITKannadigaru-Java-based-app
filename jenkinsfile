@@ -43,7 +43,7 @@ pipeline{
         stage('test'){
             steps{
                 sh'''
-                    docker run -it -d --name kannada1 -p 8080:9000 ${IMAGE_NAME}
+                    docker run -it -d --name push -p 8080:9090 ${IMAGE_NAME}
                 '''
             }
         }
