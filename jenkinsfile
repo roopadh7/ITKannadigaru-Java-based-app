@@ -43,9 +43,8 @@ pipeline{
         stage('test'){
             steps{
                 sh'''
-                    sudo fuser -k 8080/tcp
-                    netstat -tuln | grep 8080
-                    docker run -d --name push -p 8080:8080 roopa3107/itkannad:${IMAGE_NAME}
+                    
+                    docker run -d --name push1 -p 8080:9000 roopa3107/itkannad:${IMAGE_NAME}
                 '''
             }
         }
