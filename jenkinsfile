@@ -6,7 +6,7 @@ pipeline{
     }
 
     environment {
-        IMAGE_NAME = "roopa3107/itkannad:${GIT_COMMIT}"
+        IMAGE_NAME = "roopa3107/itkannada:${GIT_COMMIT}"
     }
 
     stages{
@@ -44,7 +44,7 @@ pipeline{
             steps{
                 sh'''
                     
-                    docker run -d --name push1 -p 8080:9000 roopa3107/itkannad:${IMAGE_NAME}
+                    docker run -d --name push1 -p 8080:9000 roopa3107/itkannada:${IMAGE_NAME}
                 '''
             }
         }
