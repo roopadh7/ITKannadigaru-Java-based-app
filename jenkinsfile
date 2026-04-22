@@ -44,6 +44,7 @@ pipeline{
             steps{
                 sh'''
                     docker run -it -d --name Kannada -p 8080:8000 $(IMAGE_NAME)
+                '''
 
             }
         }
