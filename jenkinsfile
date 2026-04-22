@@ -6,13 +6,13 @@ pipeline{
     }
 
     environment {
-        IMAGE_NAME = "roopa3107/itkannad:${GIT_COMMIT}"
+        IMAGE_NAME = "roopa3107/ITKannad:$(GIT-COMMIT)"
     }
 
     stages{
         stage('git-checkout'){
             steps{
-                git url: 'https://github.com/roopadh7/ITKannadigaru-Java-based-app.git', branch: 'main'
+                git url: 'https://github.com/roopadh7/ITKannadigaru-Java-based-app.git', branch: 'Project'
             }
         }
 
@@ -35,7 +35,7 @@ pipeline{
         stage('Docker-build'){
             steps{
                 sh'''
-                    docker build -t ${IMAGE_NAME} .
+                    docker build -t $(IMAGE_NAME)
                 '''
             }
         }
@@ -43,12 +43,28 @@ pipeline{
         stage('test'){
             steps{
                 sh'''
-                    docker run -it -d --name Kannada -p 8080:8000 ${IMAGE_NAME}
+                    docker run -it -d --name Kannada -p 8080:8000 $(IMAGE_NAME)
                 '''
-
             }
         }
 
-        
+        stage('login to docker'){
+            steps{
+                script {
+                    withCredentials([usernamePassword(credentialID: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')])
+                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
+                }
+            }
+        }
+
+        stage('docker push'){
+            steps{
+                sh'''
+                    docker push ${IMAGE_NAME}
+                '''
+            }
+        }
+
+
     }
 }
