@@ -43,6 +43,7 @@ pipeline{
         stage('test'){
             steps{
                 sh'''
+                    docker rm -f push1
                     docker run -d --name push1 -p 8080:9000 ${IMAGE_NAME}
                 '''
             }
