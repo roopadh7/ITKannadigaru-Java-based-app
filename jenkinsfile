@@ -6,7 +6,7 @@ pipeline{
     }
 
     environment {
-        IMAGE_NAME = "roopa3107/ITKannad:$(GIT-COMMIT)"
+        IMAGE_NAME = "roopa3107/ITKannad:$(GIT_COMMIT)"
     }
 
     stages{
