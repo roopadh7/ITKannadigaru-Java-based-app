@@ -43,8 +43,6 @@ pipeline{
         stage('test'){
             steps{
                 sh'''
-                    docker kill push1
-                    docker rm push1
 
                     docker run -d --name push1 -p 8080:9000 roopa3107/itkannada:${IMAGE_NAME}
                 '''
