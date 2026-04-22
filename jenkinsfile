@@ -44,7 +44,7 @@ pipeline{
             steps{
                 sh'''
                     docker rm -f push1 || true
-                    docker run -d --name push1 -p 8080:80 ${IMAGE_NAME}
+                    docker run -d --name push1 -p 8081:80 ${IMAGE_NAME}
                 '''
             }
         }
