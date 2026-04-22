@@ -1,0 +1,16 @@
+com/itkannadigaru/controller/FactsController.class
+com/itkannadigaru/controller/DashboardController.class
+com/itkannadigaru/repository/PostRepository.class
+com/itkannadigaru/database/DatabaseManager.class
+com/itkannadigaru/model/Post.class
+com/itkannadigaru/security/SecurityConfig.class
+com/itkannadigaru/service/UserService.class
+com/itkannadigaru/model/User.class
+com/itkannadigaru/repository/UserRepository.class
+com/itkannadigaru/ItkannadigaruApplication.class
+com/itkannadigaru/controller/HomeController.class
+com/itkannadigaru/service/PostService.class
+com/itkannadigaru/repository/UserRepository$1.class
+com/itkannadigaru/controller/AuthController.class
+com/itkannadigaru/controller/AuthController$RegistrationForm.class
+com/itkannadigaru/repository/PostRepository$PostRowMapper.class

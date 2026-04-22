@@ -1,0 +1,800 @@
+
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="navbar (active)">
+<nav class="navbar">
+    <div class="nav-container">
+        <!-- Brand Section -->
+        <a th:href="@{/}" class="nav-brand">
+            <div class="brand-logo">
+                <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="18" fill="url(#gradient)" opacity="0.9"/>
+                    <path d="M20 10 L28 18 L24 18 L24 30 L16 30 L16 18 L12 18 Z" fill="white"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" style="stop-color:#FF6B6B"/>
+                            <stop offset="100%" style="stop-color:#FFD93D"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">ITKANNADIGARU</span>
+                <span class="brand-tagline">DevOps & AI Excellence</span>
+            </div>
+        </a>
+
+        <!-- Hamburger Menu (Mobile) -->
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Navigation Links -->
+        <div class="nav-menu" id="navMenu">
+            <!-- Search Bar -->
+            <div class="nav-search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="text" placeholder="Search..." class="search-input">
+            </div>
+
+            <!-- Nav Links -->
+            <div class="nav-links">
+                <a th:href="@{/}" class="nav-link" data-text="Home" th:classappend="${active}=='home' ? ' active'">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
+
+                <a th:href="@{/facts}" class="nav-link" data-text="Facts" th:classappend="${active}=='facts' ? ' active'">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    <span>IT Facts</span>
+                </a>
+
+                <a th:href="@{/jobs}" class="nav-link" data-text="Jobs" th:classappend="${active}=='jobs' ? ' active'">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="7" width="18" height="13" rx="2"/>
+                        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                    </svg>
+                    <span>Jobs</span>
+                </a>
+
+                <th:block th:if="${username != null}">
+                    <a th:href="@{/dashboard}" class="nav-link" data-text="Dashboard" th:classappend="${active}=='dashboard' ? ' active'">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                </th:block>
+            </div>
+
+            <!-- User Section -->
+            <div class="nav-user-section">
+                <th:block th:if="${username != null}">
+                    <!-- Notifications -->
+                    <button class="notification-btn">
+                        <svg class="notification-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+
+                    <!-- User Profile Dropdown -->
+                    <div class="user-dropdown">
+                        <button class="user-avatar-btn" onclick="toggleUserMenu()">
+                            <div class="user-avatar">
+                                <span th:text="${#strings.substring(username, 0, 1).toUpperCase()}">U</span>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name" th:text="${username}">User</span>
+                                <span class="user-role">Developer</span>
+                            </div>
+                            <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown-menu" id="userDropdown">
+                            <div class="dropdown-header">
+                                <div class="dropdown-user-avatar">
+                                    <span th:text="${#strings.substring(username, 0, 1).toUpperCase()}">U</span>
+                                </div>
+                                <div>
+                                    <div class="dropdown-user-name" th:text="${username}">User</div>
+                                    <div class="dropdown-user-email">developer@itkannadigaru.com</div>
+                                </div>
+                            </div>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a href="/dashboard" class="dropdown-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <span>Profile</span>
+                            </a>
+
+                            <a href="/dashboard" class="dropdown-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <span>Settings</span>
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <form th:action="@{/logout}" method="post" style="margin: 0;">
+                                <button type="submit" class="dropdown-item logout-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                        <polyline points="16 17 21 12 16 7"/>
+                                        <line x1="21" y1="12" x2="9" y2="12"/>
+                                    </svg>
+                                    <span>Logout</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </th:block>
+
+                <!-- Login Button (when not authenticated) -->
+                <th:block th:if="${username == null}">
+                    <a th:href="@{/login}" class="login-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                        <span>Login</span>
+                    </a>
+                </th:block>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+</nav>
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --accent-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --glass-bg: rgba(255, 255, 255, 0.1);
+        --glass-border: rgba(255, 255, 255, 0.2);
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .navbar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0.75rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    /* Brand Section */
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .nav-brand:hover {
+        transform: translateY(-2px);
+    }
+
+    .brand-logo {
+        position: relative;
+    }
+
+    .logo-svg {
+        width: 45px;
+        height: 45px;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .brand-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+
+    .brand-name {
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .brand-tagline {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: white;
+        border-radius: 3px;
+        transition: var(--transition);
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Navigation Menu */
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    /* Search Bar */
+    .nav-search {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: var(--transition);
+        min-width: 200px;
+    }
+
+    .nav-search:focus-within {
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .search-icon {
+        width: 18px;
+        height: 18px;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .search-input {
+        background: none;
+        border: none;
+        outline: none;
+        color: white;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+
+    .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Navigation Links */
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: white;
+        text-decoration: none;
+        padding: 0.65rem 1.2rem;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+        z-index: -1;
+    }
+
+    .nav-link:hover::before {
+        transform: scaleX(1);
+    }
+
+    .nav-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-icon {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2.5;
+    }
+
+    /* User Section */
+    .nav-user-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    /* Notification Button */
+    .notification-btn {
+        position: relative;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 0.65rem;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .notification-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+    }
+
+    .notification-icon {
+        width: 20px;
+        height: 20px;
+        color: white;
+    }
+
+    .notification-badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 700;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #667eea;
+        box-shadow: 0 2px 8px rgba(245, 87, 108, 0.4);
+    }
+
+    /* User Dropdown */
+    .user-dropdown {
+        position: relative;
+    }
+
+    .user-avatar-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 0.5rem 1rem 0.5rem 0.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .user-avatar-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .user-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.1rem;
+    }
+
+    .user-name {
+        color: white;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .user-role {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.75rem;
+    }
+
+    .dropdown-arrow {
+        width: 16px;
+        height: 16px;
+        color: rgba(255, 255, 255, 0.8);
+        transition: transform 0.3s ease;
+    }
+
+    .user-avatar-btn:hover .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Dropdown Menu */
+    .dropdown-menu {
+        position: absolute;
+        top: calc(100% + 0.75rem);
+        right: 0;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+        min-width: 280px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: var(--transition);
+        overflow: hidden;
+    }
+
+    .dropdown-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .dropdown-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .dropdown-user-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1.25rem;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .dropdown-user-name {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .dropdown-user-email {
+        font-size: 0.85rem;
+        opacity: 0.9;
+        margin-top: 0.2rem;
+    }
+
+    .dropdown-divider {
+        height: 1px;
+        background: #e5e7eb;
+        margin: 0.5rem 0;
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.9rem 1.25rem;
+        color: #374151;
+        text-decoration: none;
+        transition: var(--transition);
+        cursor: pointer;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        font-size: 0.95rem;
+    }
+
+    .dropdown-item:hover {
+        background: #f3f4f6;
+    }
+
+    .dropdown-item svg {
+        width: 20px;
+        height: 20px;
+        color: #6b7280;
+    }
+
+    .logout-item {
+        color: #dc2626;
+    }
+
+    .logout-item svg {
+        color: #dc2626;
+    }
+
+    .logout-item:hover {
+        background: #fee2e2;
+    }
+
+    /* Login Button */
+    .login-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.95);
+        color: #667eea;
+        text-decoration: none;
+        padding: 0.7rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: var(--transition);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .login-btn:hover {
+        background: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Scroll Progress Bar */
+    .scroll-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+        width: 0%;
+        transition: width 0.1s ease;
+        box-shadow: 0 0 10px rgba(245, 87, 108, 0.5);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .nav-search {
+            min-width: 150px;
+        }
+
+        .user-info {
+            display: none;
+        }
+
+        .brand-tagline {
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hamburger {
+            display: flex;
+        }
+
+        .nav-container {
+            padding: 0.75rem 1rem;
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 350px;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 5rem 2rem 2rem;
+            transition: right 0.3s ease;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-search {
+            width: 100%;
+            min-width: auto;
+        }
+
+        .nav-links {
+            flex-direction: column;
+            width: 100%;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .nav-user-section {
+            flex-direction: column;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .notification-btn {
+            width: 100%;
+            justify-content: flex-start;
+            padding: 0.75rem 1rem;
+        }
+
+        .user-avatar-btn {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .user-info {
+            display: flex;
+        }
+
+        .login-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .dropdown-menu {
+            position: static;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            margin-top: 0.5rem;
+        }
+
+        .brand-name {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<script>
+    // Toggle Mobile Menu
+    function toggleMobileMenu() {
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    }
+
+    // Toggle User Dropdown Menu
+    function toggleUserMenu() {
+        const dropdown = document.getElementById('userDropdown');
+        dropdown.classList.toggle('active');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const userDropdown = document.querySelector('.user-dropdown');
+        const dropdown = document.getElementById('userDropdown');
+
+        if (dropdown && userDropdown && !userDropdown.contains(event.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', function() {
+        const scrollProgress = document.getElementById('scrollProgress');
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+
+        if (scrollProgress) {
+            scrollProgress.style.width = scrollPercent + '%';
+        }
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            if (navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    });
+</script>
+</div>

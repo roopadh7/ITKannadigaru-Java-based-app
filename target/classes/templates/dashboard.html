@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ITKANNADIGARU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .posts-list {
+            grid-column: 1 / -1;
+        }
+
+        .post-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-item-meta {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-item-content {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .no-posts-yet {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        @media (max-width: 968px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .post-item {
+                flex-direction: column;
+            }
+
+            .post-actions {
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            .delete-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar('dashboard')}"></div>
+
+    <div class="main-container">
+        <div class="dashboard-header">
+            <h1>📊 Dashboard</h1>
+            <p>Create and manage your posts</p>
+        </div>
+
+        <div th:if="${success}" class="alert alert-success">
+            ✓ <span th:text="${success}">Success message</span>
+        </div>
+
+        <div th:if="${error}" class="alert alert-error">
+            ✗ <span th:text="${error}">Error message</span>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2 class="card-title">✍️ Create New Post</h2>
+
+                <form th:action="@{/dashboard/post}" th:object="${post}" method="post">
+                    <div class="form-group">
+                        <label for="title">Post Title</label>
+                        <input type="text"
+                               id="title"
+                               th:field="*{title}"
+                               placeholder="Enter an engaging title"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" th:field="*{category}" required>
+                            <option value="">Select a category</option>
+                            <option value="DevOps">🤖 DevOps</option>
+                            <option value="AI">🧠 AI</option>
+                            <option value="GenAI">✨ GenAI</option>
+                            <option value="MCP">🔌 MCP Servers</option>
+                            <option value="Cloud">☁️ Cloud</option>
+                            <option value="Tutorial">📚 Tutorial</option>
+                            <option value="News">📰 News</option>
+                            <option value="Other">🔧 Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Content</label>
+                        <textarea id="content"
+                                 th:field="*{content}"
+                                 placeholder="Share your thoughts, knowledge, or experiences..."
+                                 required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">🚀 Publish Post</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">📌 Quick Tips</h2>
+                <div style="color: #555; line-height: 1.8;">
+                    <p><strong>✅ Make it engaging:</strong> Start with a hook to grab attention</p>
+                    <p><strong>📝 Keep it clear:</strong> Use simple language and short paragraphs</p>
+                    <p><strong>🔖 Choose wisely:</strong> Select the most relevant category</p>
+                    <p><strong>🎯 Be specific:</strong> Focus on one topic per post</p>
+                    <p><strong>💡 Add value:</strong> Share actionable insights or tips</p>
+                </div>
+            </div>
+
+            <div class="card posts-list">
+                <h2 class="card-title">📝 Your Posts</h2>
+
+                <div th:if="${posts != null and !posts.empty}">
+                    <div class="post-item" th:each="post : ${posts}" th:if="${post.author == username}">
+                        <div class="post-info">
+                            <div class="post-item-title" th:text="${post.title}">Post Title</div>
+                            <div class="post-item-meta">
+                                <span th:text="${post.category}">Category</span> •
+                                <span th:text="${#temporals.format(post.createdAt, 'MMM dd, yyyy HH:mm')}">Date</span>
+                            </div>
+                            <div class="post-item-content" th:text="${post.content}">Post content...</div>
+                        </div>
+                        <div class="post-actions">
+                            <form th:action="@{/dashboard/post/delete/{id}(id=${post.id})}" method="post">
+                                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this post?')">
+                                    🗑️ Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${posts == null or posts.empty}" class="no-posts-yet">
+                    <h3>No posts created yet!</h3>
+                    <p>Create your first post using the form above.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">ITKANNADIGARU - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+
+        /* --- Main Content Styles (EXISTING) --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .youtube-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .youtube-section h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .youtube-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .youtube-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .posts-section, .facts-sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .post-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .post-category {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .post-content {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .fact-item {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #667eea;
+        }
+
+        .fact-title {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .fact-content {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        /* Media Query for Responsiveness (UPDATED) */
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .navbar {
+                padding: 0.75rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none; /* Hide by default on mobile */
+                flex-direction: column;
+                position: absolute;
+                top: 60px; /* Adjust based on navbar height */
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 1rem 2rem;
+                gap: 0.5rem;
+            }
+
+            .nav-links.open {
+                display: flex; /* Show when toggled */
+            }
+
+            .nav-links a {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .auth-actions {
+                /* We can show the button on mobile or hide it—hiding for now */
+                display: none; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar('home')}"></div>
+
+    <div class="main-container">
+        <div class="hero-section">
+            <h1>🚀 ITKANNADIGARU</h1>
+            <p>Your Gateway to DevOps, AI, GenAI & IT Excellence</p>
+        </div>
+
+        <div class="youtube-section">
+            <h2>📺 Subscribe to Our YouTube Channel</h2>
+            <a href="https://www.youtube.com/@Manojdevops-z7s"
+               class="youtube-link"
+               target="_blank"
+               rel="noopener noreferrer">
+                ▶ ITKannadigaru
+            </a>
+        </div>
+
+        <div class="content-grid">
+            <div class="posts-section">
+                <h2 class="section-title">📝 Latest Posts</h2>
+
+                <div th:if="${posts != null and !posts.empty}">
+                    <div class="post-card" th:each="post : ${posts}">
+                        <div class="post-header">
+                            <h3 class="post-title" th:text="${post.title}">Post Title</h3>
+                            <span class="post-category" th:text="${post.category}">Category</span>
+                        </div>
+                        <p class="post-content" th:text="${post.content}">Post content goes here...</p>
+                        <div class="post-meta">
+                            <span>👤 By <strong th:text="${post.author}">Author</strong></span>
+                            <span>📅 <span th:text="${#temporals.format(post.createdAt, 'MMM dd, yyyy HH:mm')}">Date</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${posts == null or posts.empty}" class="no-posts">
+                    <h3>No posts yet!</h3>
+                    <p th:if="${username != null}">Be the first to create a post in the <a href="/dashboard">Dashboard</a></p>
+                    <p th:if="${username == null}">Please <a href="/login">login</a> to create posts</p>
+                </div>
+            </div>
+
+            <div class="facts-sidebar">
+                <h2 class="section-title">💡 Quick Facts</h2>
+
+                <div class="fact-item">
+                    <div class="fact-title">🤖 DevOps Trend</div>
+                    <div class="fact-content">
+                        GitOps is revolutionizing deployment strategies, with 90% of enterprises adopting it by 2025.
+                    </div>
+                </div>
+
+                <div class="fact-item">
+                    <div class="fact-title">🧠 AI Revolution</div>
+                    <div class="fact-content">
+                        AI-powered code assistants can increase developer productivity by up to 40%.
+                    </div>
+                </div>
+
+                <div class="fact-item">
+                    <div class="fact-title">✨ GenAI Impact</div>
+                    <div class="fact-content">
+                        Generative AI is transforming software development, testing, and documentation workflows.
+                    </div>
+                </div>
+
+                <div class="fact-item">
+                    <div class="fact-title">🔌 MCP Servers</div>
+                    <div class="fact-content">
+                        Model Context Protocol enables AI assistants to interact seamlessly with external tools and APIs.
+                    </div>
+                </div>
+
+                <div class="fact-item">
+                    <div class="fact-title">📊 Container Orchestration</div>
+                    <div class="fact-content">
+                        Kubernetes dominates the container orchestration space with 88% market adoption.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

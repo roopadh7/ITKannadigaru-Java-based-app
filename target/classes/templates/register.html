@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{font-family:'Inter',-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);color:#1a202c;padding-top:20px;min-height:100vh}
+        .container{max-width:480px;margin:2rem auto;padding:0 1rem}
+        .card{background:white;padding:2rem;border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,.1)}
+        h2{color:#333;margin-bottom:1.5rem;text-align:center;font-size:1.75rem}
+        input{width:100%;padding:.75rem;border:2px solid #e0e0e0;border-radius:.5rem;margin:.25rem 0 .75rem;font-size:1rem;transition:all 0.3s ease}
+        input:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,0.1)}
+        button{background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:white;padding:.75rem 1rem;border:none;border-radius:.5rem;cursor:pointer;width:100%;font-weight:600;font-size:1rem;transition:all 0.3s ease}
+        button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
+        .error{color:#b91c1c;margin:.25rem 0 .75rem;font-size:.9rem;background:#fee2e2;padding:.5rem;border-radius:.375rem;border-left:4px solid #dc3545}
+        a{color:#667eea;text-decoration:none;font-weight:500}
+        a:hover{text-decoration:underline}
+        label{font-weight:500;color:#333;display:block}
+        p{text-align:center;margin-top:1rem}
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar(null)"></div>
+<div class="container">
+    <div class="card">
+        <h2>📝 Register</h2>
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+        <form th:action="@{/register}" method="post" th:object="${registrationForm}">
+            <label>Username</label>
+            <input type="text" th:field="*{username}" required placeholder="Choose a username" />
+            <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            <label>Email</label>
+            <input type="email" th:field="*{email}" required placeholder="Enter your email" />
+            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            <label>Password</label>
+            <input type="password" th:field="*{password}" required placeholder="Create a password" />
+            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <label>Confirm Password</label>
+            <input type="password" th:field="*{confirmPassword}" required placeholder="Confirm your password" />
+            <div class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+            <button type="submit">Create account</button>
+        </form>
+        <p>Already have an account? <a th:href="@{/login}">Login</a></p>
+    </div>
+</div>
+</body>
+</html>

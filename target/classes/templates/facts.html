@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Facts & Hiring - ITKANNADIGARU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-sections {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .section-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .fact-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .fact-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.75rem;
+        }
+
+        .fact-card-content {
+            color: #555;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .hiring-trend-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .hiring-trend-list li {
+            background: #f8f9fa;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            transition: all 0.3s ease;
+        }
+
+        .hiring-trend-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hiring-trend-list strong {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-badge {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .facts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar('facts')}"></div>
+
+    <div class="main-container">
+        <div class="page-header">
+            <h1>💡 IT Facts & Hiring Insights</h1>
+            <p>Stay Updated with the Latest Trends in Technology & Employment</p>
+        </div>
+
+        <div class="content-sections">
+            <!-- DevOps Facts -->
+            <div class="section-card">
+                <h2 class="section-title">🤖 DevOps & Cloud Trends</h2>
+                <div class="facts-grid">
+                    <div class="fact-card">
+                        <div class="fact-card-title">GitOps Adoption</div>
+                        <div class="fact-card-content">
+                            90% of enterprises are expected to adopt GitOps practices by 2025, revolutionizing deployment and infrastructure management.
+                        </div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-card-title">Kubernetes Dominance</div>
+                        <div class="fact-card-content">
+                            Kubernetes holds 88% of the container orchestration market, becoming the de facto standard for cloud-native applications.
+                        </div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-card-title">Infrastructure as Code</div>
+                        <div class="fact-card-content">
+                            Companies using IaC experience 60% fewer configuration errors and 50% faster deployment times.
+                        </div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-card-title">Multi-Cloud Strategy</div>
+                        <div class="fact-card-content">
+                            87% of enterprises now have a multi-cloud strategy, with AWS, Azure, and GCP leading the market.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI & GenAI Facts -->
+            <div class="section-card">
+                <h2 class="section-title">🧠 AI & GenAI Revolution</h2>
+                <div class="facts-grid">
+                    <div class="fact-card">
+                        <div class="fact-card-title">AI Code Assistants</div>
+                        <div class="fact-card-content">
+                            AI-powered coding tools like GitHub Copilot increase developer productivity by 40% and reduce debugging time by 30%.
+                        </div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-card-title">GenAI Market Growth</div>
+                        <div class="fact-card-content">
+                            The generative AI market is projected to reach $110 billion by 2030, growing at a CAGR of 37%.
+                        </div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-card-title">LLM Adoption</div>
+                        <div class="fact-card-content">
+                            65% of software companies are integrating Large Language Models into their products and workflows.
+                        </div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-card-title">Prompt Engineering</div>
+                        <div class="fact-card-content">
+                            Prompt engineering is emerging as a critical skill, with demand increasing by 400% in 2024.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hiring Trends -->
+            <div class="section-card">
+                <h2 class="section-title">📊 IT Job Market Statistics</h2>
+
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-number">3.5M</div>
+                        <div class="stat-label">Tech Jobs in 2024</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">$120K</div>
+                        <div class="stat-label">Avg DevOps Salary</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">42%</div>
+                        <div class="stat-label">Remote Work Rate</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">85%</div>
+                        <div class="stat-label">Companies Hiring AI Talent</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #333;">🔥 Top Hiring Trends 2024-2025</h3>
+                <ul class="hiring-trend-list">
+                    <li><strong>Cloud-Native Engineers:</strong> High demand for Kubernetes, Docker, and microservices expertise</li>
+                    <li><strong>AI/ML Engineers:</strong> Companies actively hiring for LLM fine-tuning and GenAI integration</li>
+                    <li><strong>DevSecOps Specialists:</strong> Security integration in CI/CD pipelines is now essential</li>
+                    <li><strong>Platform Engineers:</strong> Building internal developer platforms is a top priority</li>
+                    <li><strong>Data Engineers:</strong> Managing big data pipelines and real-time analytics</li>
+                    <li><strong>Site Reliability Engineers (SRE):</strong> Ensuring system reliability at scale</li>
+                </ul>
+            </div>
+
+            <!-- In-Demand Skills -->
+            <div class="section-card">
+                <h2 class="section-title">🚀 Most In-Demand Tech Skills</h2>
+                <div class="tech-stack-grid">
+                    <div class="tech-badge">Python</div>
+                    <div class="tech-badge">Kubernetes</div>
+                    <div class="tech-badge">AWS</div>
+                    <div class="tech-badge">Docker</div>
+                    <div class="tech-badge">Terraform</div>
+                    <div class="tech-badge">React</div>
+                    <div class="tech-badge">Go</div>
+                    <div class="tech-badge">TypeScript</div>
+                    <div class="tech-badge">Azure</div>
+                    <div class="tech-badge">Jenkins</div>
+                    <div class="tech-badge">Ansible</div>
+                    <div class="tech-badge">PostgreSQL</div>
+                    <div class="tech-badge">MongoDB</div>
+                    <div class="tech-badge">GraphQL</div>
+                    <div class="tech-badge">GitLab CI/CD</div>
+                    <div class="tech-badge">Prometheus</div>
+                </div>
+            </div>
+
+            <!-- MCP Servers Info -->
+            <div class="section-card">
+                <h2 class="section-title">🔌 Model Context Protocol (MCP)</h2>
+                <div class="facts-grid">
+                    <div class="fact-card">
+                        <div class="fact-card-title">What is MCP?</div>
+                        <div class="fact-card-content">
+                            MCP is an open protocol that enables AI assistants to securely connect to external data sources and tools.
+                        </div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-card-title">Enterprise Adoption</div>
+                        <div class="fact-card-content">
+                            70% of enterprises are exploring MCP servers to integrate AI into their existing workflows and systems.
+                        </div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-card-title">Use Cases</div>
+                        <div class="fact-card-content">
+                            MCP enables AI to access databases, APIs, file systems, and cloud services seamlessly.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
