@@ -43,8 +43,9 @@ pipeline{
         stage('test'){
             steps{
                 sh'''
+                    docker kill push1
                     docker rm -f push1
-                    docker run -d --name push1 -p 8080:9000 ${IMAGE_NAME}
+                    docker run -d --name push1 -p 8080:9001 ${IMAGE_NAME}
                 '''
             }
         }
