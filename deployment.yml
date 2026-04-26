@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: fullstack
+      app: fullstack 
   replicas: 3
   template:
     metadata:
